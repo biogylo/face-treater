@@ -5,11 +5,15 @@
 ## How to set pictures up for detection and treatment
 
 To load the pictures, the pictures must be inside the folder
-                            raw_pictures/
-        example:
-                            raw_pictures/peter-whatevs.jpg
-                            raw_pictures/potato-picture.png
-                            raw_pictures/banana.gif
+```
+raw_pictures/
+```
+example:
+```
+raw_pictures/peter-whatevs.jpg
+raw_pictures/potato-picture.png
+raw_pictures/banana.gif
+```
 and their filenames must be declared inside a csv file with two
 or more columns, including at least "name" and "picture_filename". It will
 preserve any other columns you wish to add in the new dataframe.
@@ -23,9 +27,9 @@ preserve any other columns you wish to add in the new dataframe.
 |2|SMALLEST BANANA|banana.gif|Purple|
 
 The program will return only valid pictures, with the same filenames,
-but treated, inside a folder:
+but treated, inside a folder called treated_pictures:
 ```
-                            treated_pictures/
+treated_pictures/
 ```
 example:
 ```
