@@ -14,9 +14,7 @@ raw_pictures/peter-whatevs.jpg
 raw_pictures/potato-picture.png
 raw_pictures/banana.gif
 ```
-and their filenames must be declared inside a csv file with two
-or more columns, including at least "name" and "picture_filename". It will
-preserve any other columns you wish to add in the new dataframe.
+and their filenames must be declared inside a csv file with two or more columns, including at least the column "picture_filename", which by the way, should include the picture filename. It will preserve any other columns you wish to add in the new dataframe.
 
 **Filename:** raw_picture.csv
 
@@ -26,8 +24,7 @@ preserve any other columns you wish to add in the new dataframe.
 |1|BIGGEST POTATO|potato-picture.png|Green|
 |2|SMALLEST BANANA|banana.gif|Purple|
 
-The program will return only valid pictures, with the same filenames,
-but treated, inside a folder called treated_pictures:
+The program will return only valid pictures, with the same filenames, but treated, inside a folder called treated_pictures:
 ```
 treated_pictures/
 ```
@@ -37,10 +34,9 @@ treated_pictures/peter-whatevs.jpg
 treated_pictures/banana.gif
 ```
 
-and the new csv file will be a copy of the last one, with the difference
-that it will preserve only the treated pictures rows
+and the new csv file will be a copy of the last one, with the difference that it will preserve only the treated pictures rows
 
-treated_pictures.csv
+**Filename:** 'treated_pictures.csv'
 
 |index|name|picture_filename|random_property|
 |-----|----|----------------|---------------|
