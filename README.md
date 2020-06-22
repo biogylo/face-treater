@@ -26,10 +26,12 @@ The program will return only valid pictures, with the same filenames,
 but treated, inside a folder:
 ```
                             treated_pictures/
-                            ```
-        example:
-```treated_pictures/peter-whatevs.jpg```
-```treated_pictures/banana.gif```
+```
+example:
+```
+treated_pictures/peter-whatevs.jpg
+treated_pictures/banana.gif
+```
 
 and the new csv file will be a copy of the last one, with the difference
 that it will preserve only the treated pictures rows
