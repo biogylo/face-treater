@@ -14,25 +14,29 @@ and their filenames must be declared inside a csv file with two
 or more columns, including at least "name" and "picture_filename". It will
 preserve any other columns you wish to add in the new dataframe.
 
-raw_picture.csv
+**Filename:** raw_picture.csv
 
-            name                picture_filename        random_property
-        0   Peter's Picture     peter-whatevs.jpg       Orange
-        1   BIGGEST POTATO      potato-picture.png      Green
-        2   SMALLEST BANANA     banana.gif              Purple
+|index|name|picture_filename|random_property|
+|-----|----|----------------|---------------|
+|0|Peter's Picture|peter-whatevs.jpg|Orange|
+|1|BIGGEST POTATO|potato-picture.png|Green|
+|2|SMALLEST BANANA|banana.gif|Purple|
 
 The program will return only valid pictures, with the same filenames,
 but treated, inside a folder:
+```
                             treated_pictures/
+                            ```
         example:
-                            treated_pictures/peter-whatevs.jpg
-                            treated_pictures/banana.gif
+```treated_pictures/peter-whatevs.jpg```
+```treated_pictures/banana.gif```
 
 and the new csv file will be a copy of the last one, with the difference
 that it will preserve only the treated pictures rows
 
 treated_pictures.csv
 
-            name                picture_filename        random_property
-        0   Peter's Picture     peter-whatevs.jpg       Orange
-        2   SMALLEST BANANA     banana.gif              Purple
+|index|name|picture_filename|random_property|
+|-----|----|----------------|---------------|
+|0|Peter's Picture|peter-whatevs.jpg|Orange|
+|2|SMALLEST BANANA|banana.gif|Purple|
