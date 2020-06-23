@@ -1,30 +1,29 @@
-
-import argparse
+from imutils import face_utils
 import numpy as np
+import argparse
+import imutils
+import dlib
 import cv2
-import face_treater_config as cfg
 
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades+"haarcascade_frontalface_default.xml")
-eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades+"haarcascade_eye.xml")
+import face_treater_config as cfg
+import extra_functions
+
+detector = dlib.get_frontal_face_detector()
+predictor = dlib.shape_predictor(cfg.FACE_SHAPE_PREDICTOR_LOCATION)
 
 def get_blurryness(image):
     return cv2.Laplacian(image, cv2.CV_64F).var()
 
-def get_landmarks(image):
-    gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-    faces = face_cascade.detectMultiScale(gray,1.3,5)
-    return faces
+def get_gray(image):
+    return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-img = cv2.imread("raw_pictures/billie-eilish-1.jpg")
-gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-for (x,y,w,h) in get_landmarks(img):
-    img = cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
-    roi_gray = gray[y:y+h, x:x+w]
-    roi_color = img[y:y+h, x:x+w]
-    eyes = eye_cascade.detectMultiScale(roi_gray)
+def get_face(image): ## gets the bounding box for rectangles
+    ## Returns a dlib rectangle, or false if no face was found
+    faces = detector(get_gray(image))
 
-for (ex,ey,ew,eh) in eyes:
-        cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
-cv2.imshow('img',img)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+    if len(faces) == 1:
+        return faces[0]
+    else:
+        return len(faces)
+def get_landmarks(image,face):
+    return face_utils.shape_to_np(predictor(get_gray(image),face))

@@ -7,6 +7,7 @@ import cv2
 from tqdm import tqdm # Progress bar library
 import face_treater_config as cfg # Config file with the necessary constants
 import face_detector
+import face_transformer
 
 treated_info = None
 raw_info = None
@@ -66,27 +67,49 @@ pending_pictures = raw_info[pending_indexes]
 
 for picture_row in tqdm(pending_pictures.to_dict('records')):
     picture_copy = picture_row.copy()
-    picture_path = cfg.PICTURE_FOLDER + picture_copy[cfg.FILENAME_COLUMN]
+    picture_path = cfg.RAW_PICTURE_FOLDER + picture_copy[cfg.FILENAME_COLUMN]
     try:
-        current_picture = cv2.imread(picture_path)
+        current_image = cv2.imread(picture_path)
     except FileNotFoundError:
         print('FileNotFoundError: The file in {0} does not exist, skipping.'.format(picture_path))
         continue
 
-    blurryness = face_detector.get_blurryness(current_picture)
-
+    # Check if picture is blurry
+    blurryness = face_detector.get_blurryness(current_image)
     if blurryness <= cfg.BLUR_TRESHOLD:
+        # Adds an entry to the row, rejected.
         picture_copy['rejected'] = "Too blurry. Blurryness = {0}".format(blurryness)
         rejected_info = rejected_info.append(picture_copy,ignore_index=True)
         rejected_info.to_csv(cfg.REJECTED_INFO_FILENAME, index=False)
-        continue
+        continue # Skips and continues
 
-    landmarks = face_detector.get_landmarks()
+    # Check if picture has a face
+    face = face_detector.get_face(current_image)
+    if isinstance(face,int) :
+        # Adds an entry to the row, rejected.
+        if face > 1:
+            picture_copy['rejected'] = "Too many faces. Faces = {0}".format(face)
+        else:
+            picture_copy['rejected'] = "No faces were found."
+        rejected_info = rejected_info.append(picture_copy,ignore_index=True)
+        rejected_info.to_csv(cfg.REJECTED_INFO_FILENAME, index=False)
+        continue # Skips and continues
 
-    cv2.imshow(picture_path,current_picture)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    landmarks = face_detector.get_landmarks(current_image,face)
+
+
+    #for (i, (x,y)) in enumerate(landmarks):
+    #    cv2.circle(current_image,(x, y), 1, (0, 0, 255), -1)
+    target_path = cfg.TREATED_PICTURE_FOLDER + picture_copy[cfg.FILENAME_COLUMN]
+
+    fixed_image = face_transformer.get_fixed_image(current_image, landmarks)
+
+    cv2.imwrite(cfg.TREATED_PICTURE_FOLDER + picture_copy[cfg.FILENAME_COLUMN],fixed_image)
+    cv2.imwrite('treated_pictures128/' + picture_copy[cfg.FILENAME_COLUMN],cv2.resize(fixed_image, (128,128)))
+    cv2.imwrite('treated_pictures64/' + picture_copy[cfg.FILENAME_COLUMN],cv2.resize(fixed_image, (64,64)))
+
     treated_info = treated_info.append(picture_copy,ignore_index=True)
     treated_info.to_csv(cfg.TREATED_INFO_FILENAME,index=False)
 
+print("\n Processed {0} pictures\n\tTreated {1} pictures.\n\tRejected {2} pictures.".format(len(pending_pictures.index), len(treated_info.index),len(rejected_info.index)))
 print("\nDone.")
