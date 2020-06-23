@@ -1,5 +1,6 @@
 # face-treater
- Checks all the pictures in a folder and copies to another folder only the pictures where the face is recognizable enough and applies transformations to keep the eyes and nose centered.
+Batch alignment of face images.
+Checks all the pictures in a folder and copies to another folder only the pictures where the face is not blurry, and its recognizable enough and applies transformations to keep the eyes and nose centered.
 
 
 ## How to set pictures up for detection and treatment
@@ -23,7 +24,11 @@ and their filenames must be declared inside a csv file with two or more columns,
 |0|Peter's Picture|peter-whatevs.jpg|Orange|
 |1|BIGGEST POTATO|potato-picture.png|Green|
 |2|SMALLEST BANANA|banana.gif|Purple|
+|3|Hungry potato|swag.tiff|IDK|
 
+Then, you just need to run **main.py**.
+
+## Output
 The program will return only valid pictures, with the same filenames, but treated, inside a folder called treated_pictures:
 ```
 treated_pictures/
@@ -51,3 +56,4 @@ Blurry pictures, pictures where the subject has glasses, pictures with faces loo
 |index|name|picture_filename|random_property|rejected|
 |-----|----|----------------|---------------|--------|
 |1|BIGGEST POTATO|potato-picture.png|Green|BlurryPicture|
+|3|Hungry potato|swag.tiff|Couldn't find a face|
