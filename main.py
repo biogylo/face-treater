@@ -81,6 +81,8 @@ for picture_row in tqdm(pending_pictures.to_dict('records')):
         rejected_info.to_csv(cfg.REJECTED_INFO_FILENAME, index=False)
         continue
 
+    landmarks = face_detector.get_landmarks()
+
     cv2.imshow(picture_path,current_picture)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
