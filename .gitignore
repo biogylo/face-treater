@@ -19,3 +19,4 @@ jboss/server/minimal/work/**/*
 *.DEPLOYED
 *.jpg
 *.csv
+*.pyc
