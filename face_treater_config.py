@@ -7,4 +7,4 @@ REJECTED_INFO_FILENAME = 'rejected_picture_info.csv'
 FILENAME_COLUMN = 'picture_filename'
 PICTURE_FOLDER = 'raw_pictures/'
 
-BLUR_TRESHOLD = 85 
+BLUR_TRESHOLD = 185

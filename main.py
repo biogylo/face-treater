@@ -74,13 +74,16 @@ for picture_row in tqdm(pending_pictures.to_dict('records')):
         continue
 
     blurryness = face_detector.get_blurryness(current_picture)
-    
+
     if blurryness <= cfg.BLUR_TRESHOLD:
         picture_copy['rejected'] = "Too blurry. Blurryness = {0}".format(blurryness)
         rejected_info = rejected_info.append(picture_copy,ignore_index=True)
         rejected_info.to_csv(cfg.REJECTED_INFO_FILENAME, index=False)
         continue
 
+    cv2.imshow(picture_path,current_picture)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
     treated_info = treated_info.append(picture_copy,ignore_index=True)
     treated_info.to_csv(cfg.TREATED_INFO_FILENAME,index=False)
 
