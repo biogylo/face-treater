@@ -24,6 +24,7 @@ and their filenames must be declared inside a csv file with two or more columns,
 |0|Peter's Picture|peter-whatevs.jpg|Orange|
 |1|BIGGEST POTATO|potato-picture.png|Green|
 |2|SMALLEST BANANA|banana.gif|Purple|
+|3|Hungry potato|swag.tiff|IDK|
 
 Then, you just need to run **main.py**.
 
@@ -55,3 +56,4 @@ Blurry pictures, pictures where the subject has glasses, pictures with faces loo
 |index|name|picture_filename|random_property|rejected|
 |-----|----|----------------|---------------|--------|
 |1|BIGGEST POTATO|potato-picture.png|Green|BlurryPicture|
+|3|Hungry potato|swag.tiff|Couldn't find a face|
